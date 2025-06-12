@@ -25,16 +25,15 @@
 <body>
   <div id="content">인증 중입니다...</div>
 
-  <script>
-    const VALID_TOKENS = [
-      "abc123xyz", "abc456def", "abc789ghi"
-    ];
+  <!-- ✅ 2000개 토큰이 정의된 외부 JS 연결 -->
+  <script src="valid_tokens.js"></script>
 
+  <script>
     const urlParams = new URLSearchParams(window.location.search);
     const token = urlParams.get("token");
     const content = document.getElementById("content");
 
-    if (VALID_TOKENS.includes(token)) {
+    if (typeof VALID_TOKENS !== "undefined" && VALID_TOKENS.includes(token)) {
       content.innerHTML = `
         <h1>🎧 미공개 음원 재생</h1>
         <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay"
