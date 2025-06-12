@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exclusive Track Access</title>
+  <title>NFC Music Access</title>
   <style>
     body {
       font-family: sans-serif;
@@ -26,11 +26,9 @@
   <div id="content">인증 중입니다...</div>
 
   <script>
-    // NFC 키링 고유 토큰 리스트
+    // ✅ 2000개 중에서 실제로 사용할 토큰만 여기에 입력
     const VALID_TOKENS = [
-      "abc123xyz",
-      "abc456def",
-      "abc789ghi"
+      "abc123xyz", "abc456def", "abc789ghi"
     ];
 
     const urlParams = new URLSearchParams(window.location.search);
@@ -42,7 +40,58 @@
       content.innerHTML = `
         <h1>🎧 미공개 음원 재생</h1>
         <iframe width="100%" height="166"
-          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/123456789&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false">
+          src="<iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2111953446%3Fsecret_token%3Ds-HpuckgQi2hg&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/jhonnyjhon95" title="jonnyjhon95" target="_blank" style="color: #cccccc; text-decoration: none;">jonnyjhon95</a> · <a href="https://soundcloud.com/jhonnyjhon95/test_beat/s-HpuckgQi2hg" title="Test_beat" target="_blank" style="color: #cccccc; text-decoration: none;">Test_beat</a></div>"
+        </iframe>
+      `;
+    } else {
+      content.innerHTML = "<h2>⛔ 접근 권한 없음</h2><p>유효한 NFC 키링을 스캔해 주세요.</p>";
+    }
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFC Music Access</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+    }
+    iframe {
+      border: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="content">인증 중입니다...</div>
+
+  <script>
+    // ✅ 실제 사용할 토큰 리스트
+    const VALID_TOKENS = [
+      "abc123xyz", "abc456def", "abc789ghi"
+    ];
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    const content = document.getElementById("content");
+
+    if (VALID_TOKENS.includes(token)) {
+      content.innerHTML = `
+        <h1>🎧 미공개 음원 재생</h1>
+        <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay"
+          src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2111953446%3Fsecret_token%3Ds-HpuckgQi2hg&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true">
         </iframe>
       `;
     } else {
